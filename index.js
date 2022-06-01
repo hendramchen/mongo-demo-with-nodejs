@@ -46,4 +46,22 @@ async function getCourses() {
   console.log(courses);
 }
 
+// async function getCoursesWithComplexFilter() {
+  // eq is equal to
+  // ne is not equal to
+  // gt is greater than
+  // gte is greater than or equal to
+  // lt is less than
+  // lte is less than or equal to
+  // in is in
+  // nin is not in
+
+  // const courses = await Course
+  // .find({ price: { $gte: 10, $lte: 20 } })
+
+  // const courses = await Course
+  // .find({ price: { $in: [10, 15, 20] } })
+  // console.log(courses);
+// }
+
 getCourses();
