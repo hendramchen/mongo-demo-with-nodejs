@@ -15,12 +15,12 @@ const courseSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now },
   isPublished: Boolean,
 });
-
+// to create a model, we need to pass in the schema
+// the model is a class that we can use to create documents
+const Course = mongoose.model("Course", courseSchema);
+// to create a document, we need to create an instance of the model
 async function createCourse() {
-  // to create a model, we need to pass in the schema
-  // the model is a class that we can use to create documents
-  const Course = mongoose.model("Course", courseSchema);
-  // then we create objects from the model/Class
+  // we create objects from the model/Class
   const course = new Course({
     name: "Angular Course",
     author: "Mosh",
@@ -31,5 +31,19 @@ async function createCourse() {
   const result = await course.save();
   console.log(result);
 }
+// comment out the createCourse function to create a object
+// createCourse();
+// this is a query method to find courses
+async function getCourses() {
+  // get all courses without filtering
+  // const courses = await Course.find();
+  // get all courses with filtering
+  const courses = await Course
+  .find({author: 'Mosh', isPublished: true})
+  .limit(10)
+  .sort({name: 1}) // 1 is ascending, -1 is descending
+  .select({name: 1, tags: 1}); // select only the name and tags fields
+  console.log(courses);
+}
 
-createCourse();
+getCourses();
