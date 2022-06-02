@@ -62,6 +62,53 @@ async function getCourses() {
   // const courses = await Course
   // .find({ price: { $in: [10, 15, 20] } })
   // console.log(courses);
+
+  // const courses = await Course
+  // Start with Putu
+  // .find({ author: /^Putu/ })
+  // Ends with Parman
+  // .find({ author: /Parman$/i })
+  // Contains Eka
+  // .find({ author: /.*Eka.*/i })
 // }
 
-getCourses();
+// about pagination
+// async function getCourses(){
+//   const pageNumber = 2;
+//   const pageSize = 10;
+
+//   const courses = await Course
+//   .find({ author: 'Mosh' })
+//   .skip((pageNumber - 1) * pageSize)
+//   .limit(pageSize)
+// }
+
+// getCourses();
+
+async function updateCourseFirstApproach(id) {
+  // Approach: Query first
+  // findById()
+  // Modify its properties
+  // save()
+  const course =  await Course.findById(id);
+  if (!course) return;
+
+  course.isPublished = true;
+  course.author = 'Another Author';
+
+  const result = await course.save();
+  console.log(result);
+}
+
+async function updateCourseSecondApproach(id) {
+  const result = await Course.updateOne({ _id: id}, {
+    $set: {
+      author: 'Mosh',
+      isPublished: false
+    }
+  });
+  console.log(result);
+}
+
+// updateCourseFirstApproach('629762d47de482ebb4c67209');
+updateCourseSecondApproach('62976316c2bda3446f2c15b3');
