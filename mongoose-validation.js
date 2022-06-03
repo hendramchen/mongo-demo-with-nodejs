@@ -17,7 +17,19 @@ const courseSchema = new mongoose.Schema({
         enum: ["web", "mobile", "network"]
     },
     author: String,
-    tags: [String],
+    // custom validator
+    // we can avoid this input []
+    tags: {
+        type: Array,
+        validate: {
+            validator: function(v) {
+                // value is not null and value is not empty
+                return v && v.length > 0;
+            },
+            // we can define a message here
+            message: "A course should have at least one tag."
+        }
+    },
     date: { type: Date, default: Date.now },
     isPublished: Boolean,
     price: {
