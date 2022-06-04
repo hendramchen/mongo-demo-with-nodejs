@@ -14,7 +14,10 @@ const courseSchema = new mongoose.Schema({
     category: {
         type: String,
         required: true,
-        enum: ["web", "mobile", "network"]
+        enum: ["web", "mobile", "network"],
+        lowercase: true // to set value category to lowercase
+        // uppercase: true // to set value category to uppercase
+        // trim: true // to remove padding spaces
     },
     author: String,
     // custom validator
@@ -30,6 +33,21 @@ const courseSchema = new mongoose.Schema({
             message: "A course should have at least one tag."
         }
     },
+    // async validator
+    // it is used to validate file upload that required asyncrhonous
+    // tags: {
+    //     type: Array,
+    //     validate: {
+    //         isAsync: true,
+    //         validator: function(v, callback) {
+    //             setTimeout(() => {
+    //                 const result = v && v.length > 0;
+    //                 callback(result);
+    //             }, 4000);
+    //         },
+    //         message: "A course should have at least one tag."
+    //     }
+    // },
     date: { type: Date, default: Date.now },
     isPublished: Boolean,
     price: {
@@ -40,6 +58,10 @@ const courseSchema = new mongoose.Schema({
         },
         min: 10,
         max: 200,
+        // set will be call automatically when we create a new course
+        // get will be call automatically when we get a course from database
+        // get: v => Math.round(v),
+        // set: v => Math.round(v)
     }
   });
 
